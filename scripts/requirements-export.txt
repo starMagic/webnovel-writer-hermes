@@ -1,0 +1,6 @@
+# Webnovel Writer - Export Dependencies (optional)
+# 安装: pip install -r requirements-export.txt
+
+mistune>=3.0.0          # Markdown → HTML/AST 转换
+python-docx>=1.0.0      # DOCX 导出
+ebooklib>=0.18.0        # EPUB 导出
