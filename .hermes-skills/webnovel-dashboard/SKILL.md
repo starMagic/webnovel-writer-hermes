@@ -48,7 +48,7 @@ test -f "${DASHBOARD_DIR}/frontend/dist/index.html" || { echo "错误: 缺少前
 PYTHONPATH="${PWD}/.opencode" python -X utf8 -m dashboard.server --project-root "${PROJECT_ROOT}"
 ```
 
-默认端口 8765，访问 `http://127.0.0.1:8765`。
+默认端口 8888，访问 `http://127.0.0.1:8888`。
 
 自定义端口：
 ```bash
@@ -58,13 +58,13 @@ PYTHONPATH="${PWD}/.opencode" python -X utf8 -m dashboard.server --project-root 
 ### Step 4：验证服务
 
 ```bash
-curl -s http://127.0.0.1:8765/api/preflight || echo "服务未启动，请检查端口是否被占用"
+curl -s http://127.0.0.1:8888/api/preflight || echo "服务未启动，请检查端口是否被占用"
 ```
 
 ## 注意事项
 
 - Dashboard 为纯只读面板，不提供修改任何项目数据的接口
-- uvicorn 默认监听 `127.0.0.1:8765`
+- uvicorn 默认监听 `127.0.0.1:8888`
 - 首次启动可能需安装依赖（`pip install -r requirements.txt`）
 - Windows 中文输出乱码：运行 `chcp 65001` 后重试
 

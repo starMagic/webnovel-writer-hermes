@@ -86,7 +86,7 @@ cd webnovel-writer-hermes
 python -m dashboard
 ```
 
-访问 `http://127.0.0.1:8765` 查看项目状态、实体图谱和章节内容。
+访问 `http://127.0.0.1:8888` 查看项目状态、实体图谱和章节内容。
 
 ---
 
