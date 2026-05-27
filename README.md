@@ -215,6 +215,58 @@ python -m pytest scripts/data_modules/tests/test_config.py -q --no-cov
 
 ## 创作流程示例
 
+### 小白起步（零基础）
+
+```
+用户: "我想写网文但完全不知道写什么"
+  ↓
+Hermes 加载 webnovel-init → 识别为小白 → 进入小白路径
+  ↓
+📊 Step 0.2: webnovel-market 市场扫描
+  "你是番茄读者还是七猫读者？番茄最近最火的是都市异能和系统流，
+   七猫女频豪门总裁和古言宫斗持续霸榜。起点门槛高，不建议新手直接上。
+   你平时看哪个App？"
+  用户: "番茄，比较喜欢看那种主角有系统的"
+  ↓
+📖 Step 0.4: webnovel-learn 对标拆解
+  "好，搜了番茄系统流 5 本热书——"
+  
+  钩子卡片: 5本书100%用「系统激活+立刻任务」开头，第1章就有危机
+  人设卡片: 80%是「废柴外表+隐藏天赋」，读者最爱反差感
+  节奏卡片: 1-2章一个爽点，对话占比40%以上，节奏不能慢
+  
+  🔧 缝合方案:
+    A（保守）: 穿越+签到系统+都市 → 稳定但模板化
+    B（差异）: 重生+任务系统+轻度规则怪谈元素 → 有点新意
+    C（特色）: 普通人+神秘传承+隐藏世界 → 慢热但后劲足
+  用户: "B 方案有点意思"
+  ↓
+✍️ 细化故事核
+  → 书名：《重生之规则入侵》（工作名）
+  → 故事核：主角重生回规则怪谈降临前三天，绑定"违规检测系统"
+  → 核心冲突：在规则怪谈中存活 + 揭露幕后组织
+  → 生成：设定集/、大纲/总纲.md、.story-system/MASTER_SETTING.json
+  ↓
+用户: "规划第一卷"
+  ↓
+Hermes 加载 webnovel-plan → 生成节拍表、时间线、详细章纲
+  → 每章精确到 CBN/CPNs/CEN 节点 + 必须覆盖节点 + 本章禁区
+  ↓
+用户: "写前3章"
+  ↓
+Hermes 加载 webnovel-write-batch → 逐章完整闭环：
+  第1章: context-agent → chapter-writer-agent → reviewer(6维) → 修复 → 提交
+  第2章: （加载第1章事实上下文）
+  第3章: （同上）
+  → 每章汇报：审查得分 + 字数 + 伏笔状态
+  ↓
+用户: "导出为 EPUB"
+  ↓
+Hermes 加载 webnovel-export → 生成带目录 + CSS 排版的 EPUB
+```
+
+### 有想法直接写（有经验作者）
+
 ```
 用户: "我想写一本都市修真的，主角是被宗门抛弃的废柴"
   ↓
@@ -251,7 +303,7 @@ Hermes 加载 webnovel-export → 生成带目录 + CSS 排版的 EPUB
 
 ```
 webnovel-writer-hermes/
-├── .hermes-skills/          # 12 个 Hermes 技能定义
+├── .hermes-skills/          # 13 个 Hermes 技能定义
 ├── agents/                  # 5 个子 Agent 定义
 ├── scripts/                 # CLI 入口 + 核心数据模块
 │   ├── webnovel.py          # 统一 CLI 入口（28 个命令）
