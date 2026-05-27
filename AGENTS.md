@@ -27,7 +27,7 @@ Load with `skill_view(name='webnovel-xxx')`. **Auto-load rule**: scan user messa
 | `webnovel-publish` | 发布 | "发布到番茄小说" | Platform publishing with format adaptation |
 | `webnovel-query` | 查询, 状态, 进度 | "查询当前写作进度" | Project health: chapter count, debt status, word count trends |
 | `webnovel-learn` | 拆书, 学习, 分析 | "拆解《诡秘之主》的节奏" | Reference novel deconstruction → idea bank |
-| `webnovel-dashboard` | 面板, dashboard | "打开写作面板" | Launch FastAPI+React visualization dashboard on port 8080 |
+| `webnovel-dashboard` | 面板, dashboard | "打开写作面板" | Launch FastAPI+React visualization dashboard on port 8765 |
 
 ### Agents (5 agents in `agents/`)
 
@@ -88,7 +88,7 @@ Most subcommands forward to `data_modules/<module>.py` via argparse dispatch. Th
 ### Dashboard
 
 ```bash
-# Backend (FastAPI on port 8080)
+# Backend (FastAPI on port 8765)
 python -m dashboard
 
 # Frontend dev server (React + Vite, separate terminal)
