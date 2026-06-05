@@ -80,6 +80,65 @@ Hermes 版针对零基础用户设计了一条"选择式起步"路径，不需�
 
 ---
 
+## 两种运行模式
+
+Hermes 版支持两种写章模式，启动时自动检测并选择最优方案：
+
+### 模式一：Hermes + DeerFlow（推荐）
+
+利用 [DeerFlow](https://github.com/bytedance/deer-flow)（字节跳动 Super Agent Harness）将 OpenCode 版的 sub-agent 管道完整移植到 Hermes：
+
+```
+┌─────────────────────────────────────────────────┐
+│                  Hermes Agent                    │
+│  ┌──────────┐  ┌──────────┐  ┌──────────────┐  │
+│  │ 自检模块  │  │ 正文起草  │  │  润色+备份   │  │
+│  └──────────┘  └──────────┘  └──────────────┘  │
+│       │              │               │          │
+│       ▼              ▼               ▼          │
+│  ┌──────────────────────────────────────────┐   │
+│  │           DeerFlow Gateway :8001          │   │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐  │   │
+│  │  │context-  │ │reviewer  │ │data-agent│  │   │
+│  │  │agent     │ │(评分+    │ │(事实提取) │  │   │
+│  │  │(任务书)  │ │ 审查)    │ │          │  │   │
+│  │  └──────────┘ └──────────┘ └──────────┘  │   │
+│  └──────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────┘
+```
+
+| 步骤 | 执行者 | 模式 | 耗时 |
+|------|--------|------|------|
+| Step 0: 自检 | Bridge health check | — | ~2s |
+| Step 1: context-agent | DeerFlow | think | ~13s |
+| Step 2: 正文起草 | **Hermes 直写** | — | 人工 |
+| Step 3: reviewer | DeerFlow | flash | ~15s |
+| Step 4: 润色 | Hermes | — | 人工 |
+| Step 5: data-agent | DeerFlow | flash | ~10s |
+| Step 6: 备份 | Git | — | ~1s |
+
+**核心设计**：正文起草由 Hermes 主模型完成（需要创作能力），context-agent / reviewer / data-agent 三个结构化子任务交由 DeerFlow 并行执行。使用 Python wrapper 脚本（`scripts/context_agent.py`、`scripts/review_chapter.py`）彻底避免 shell JSON 转义问题。
+
+### 模式二：仅 Hermes（降级）
+
+当 DeerFlow Gateway 不可用时，自动降级为 Hermes 直写模式，跳过子 Agent 管道。经 300+ 章实战验证，产出质量可用。
+
+### 自检逻辑
+
+每次写章前自动运行：
+
+```bash
+# 1. 检查 bridge 脚本是否存在
+# 2. 检查 DeerFlow Gateway 是否可达 (curl :8001/health)
+# 3. 检查 bridge 健康状态
+# 全部通过 → hermes+deerflow
+# 任何失败 → hermes-only（安静降级，不中断流程）
+```
+
+> **前置依赖（仅模式一需要）**：安装并运行 [DeerFlow](https://github.com/bytedance/deer-flow)，Gateway 监听 `127.0.0.1:8001`。
+
+---
+
 ## 快速开始
 
 ### 环境要求

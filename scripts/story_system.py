@@ -89,10 +89,14 @@ def main() -> None:
 
     if args.persist:
         # 确保章节合同始终包含预期字段（复制后填充，避免污染 engine 原始 dict）
-        chapter_payload = dict(contract.get("chapter_brief") or {})
-        chapter_payload.setdefault("forbidden_zones", [])
-        chapter_payload.setdefault("style_guide", {})
-        chapter_payload.setdefault("ooc_warnings", [])
+        chapter_brief = contract.get("chapter_brief")
+        if chapter_brief is not None and chapter_brief:
+            chapter_payload = dict(chapter_brief)
+            chapter_payload.setdefault("forbidden_zones", [])
+            chapter_payload.setdefault("style_guide", {})
+            chapter_payload.setdefault("ooc_warnings", [])
+        else:
+            chapter_payload = None
         persist_story_seed(
             project_root=project_root,
             master_payload=contract["master_setting"],
