@@ -7,6 +7,8 @@ category: webnovel-writer
 ---
 
 > **Hermes Note**: 原始使用 OpenCode `Agent()` 子智能体调用。在 Hermes 中改用 `delegate_task(goal=..., context=...)`。子智能体定义见 `agents/` 目录。
+>
+> **v2 双模架构**: 本 skill 的 `reviewer` 子 Agent 当前通过 Hermes `delegate_task` 运行。计划下一版迁移到 DeerFlow reviewer（`scripts/review_chapter.py`），届时将获得一致的审查标准。写章管道已迁移完成，见 `webnovel-write` SKILL.md。
 
 
 # Quality Review Skill

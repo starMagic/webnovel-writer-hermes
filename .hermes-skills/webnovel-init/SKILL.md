@@ -7,6 +7,8 @@ category: webnovel-writer
 ---
 
 > **Hermes Note**: 原始使用 OpenCode `Agent()` 子智能体调用。在 Hermes 中改用 `delegate_task(goal=..., context=...)`。子智能体定义见 `agents/` 目录。
+>
+> **v2 双模架构**: 本 skill 的 `deconstruction-agent` 是独立于写章管道的专用 Agent，用于拆解参考书提取可复用模式。当前不通过 DeerFlow 运行。写章管道（context-agent/reviewer/data-agent）已迁移到 Hermes+DeerFlow 双模，见 `webnovel-write` SKILL.md。
 
 
 # Project Initialization (Deep Mode)

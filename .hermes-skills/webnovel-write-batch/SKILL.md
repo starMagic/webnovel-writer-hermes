@@ -17,6 +17,8 @@ category: webnovel-writer
 ---
 
 > **Hermes Note**: 原始使用 OpenCode `Agent()` 子智能体调用。在 Hermes 中改用 `delegate_task(goal=..., context=...)`。子智能体定义见 `agents/` 目录。
+>
+> **v2 双模架构**: 本 skill 是 `webnovel-write` 的批量包装器。单章写章已支持 Hermes+DeerFlow 双模管道（见 `webnovel-write` SKILL.md），本 skill 的 sub-agent 调用（context-agent/reviewer/data-agent）计划在下一版迁移到 DeerFlow。当前批量模式下仍使用旧 Agent() 调用，但最终会继承 `webnovel-write` 的双模自检逻辑。
 
 
 # 批量写作
